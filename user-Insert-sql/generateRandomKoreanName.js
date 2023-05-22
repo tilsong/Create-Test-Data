@@ -18,7 +18,33 @@ const lastNames = [
     "안",
     "송",
     "류",
-    "홍"
+    "홍",
+    "고",
+    "문",
+    "양",
+    "손",
+    "배",
+    "조",
+    "백",
+    "허",
+    "유",
+    "남",
+    "심",
+    "노",
+    "정",
+    "하",
+    "곽",
+    "성",
+    "차",
+    "주",
+    "우",
+    "구",
+    "신",
+    "임",
+    "전",
+    "민",
+    "나",
+    "엄"
 ];
 
 const firstNames = [
@@ -231,7 +257,7 @@ function generateRandomKoreanName() {
     var firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
     return lastName + firstName;
 }
-  
+
 module.exports = {
     generateRandomKoreanName: generateRandomKoreanName
 };
