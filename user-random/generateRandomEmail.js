@@ -5,7 +5,7 @@ const hosts = [
     "@naver.com"
 ];
 
-function generateRandomEmail(inputString) {
+const generateRandomEmail = (inputString) => {
     let host = hosts[Math.floor(Math.random() * hosts.length)];
     return inputString + host;
 }

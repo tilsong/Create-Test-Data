@@ -1,4 +1,4 @@
-function generateRandomKoreanPhoneNumber() {
+const generateRandomKoreanPhoneNumber = () => {
     let phoneNumber = "010";
   
     phoneNumber += Math.floor(Math.random() * 9) + 1;
