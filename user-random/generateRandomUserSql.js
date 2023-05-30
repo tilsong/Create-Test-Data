@@ -16,7 +16,7 @@ const makeUserInsertSQL = async (seq) => {
     const regionId = generateRandomRegionId.generateRandomRegionId();
     const now  = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-    const userSql = `INSERT INTO directorsdb.users (id, password, name, nickname, phone_number, user_status, region_id, reward, email, created_time, updated_time, withdrawal_date) VALUES ('${userId}', '${password}', '${name}', '${nickname}', '${phoneNumber}', 'JOINED', ${regionId}, 10, '${email}', '${now}', '${now}', null); `;
+    const userSql = `INSERT INTO mydb.users (id, password, name, nickname, phone_number, user_status, region_id, reward, email, created_time, updated_time, withdrawal_date) VALUES ('${userId}', '${password}', '${name}', '${nickname}', '${phoneNumber}', 'JOINED', ${regionId}, 10, '${email}', '${now}', '${now}', null); `;
     
     return [userId, userSql];
   } catch (e) {

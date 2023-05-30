@@ -18,8 +18,10 @@ const specialtyRead = () => {
     
     try {
       const data = fs.readFileSync(filePath, 'utf-8');
+      data.replace("\'", "");
+      data.replace(/\\/g, "");
+
       const dataArr = data.split("&||");
-      data.replace("\'", "")
 
       specialtyMap.set(specialtyList[i], dataArr);
 
@@ -39,7 +41,7 @@ const generateRandomSpecialty = async () => {
 }
 
 const makeSpecialtyInsertSQL = async (seq, userId) => {
-  let sql = ` INSERT INTO directorsdb.specialty (user_id, property, description, created_time, updated_time) VALUES `;
+  let sql = ` INSERT INTO mydb.specialty (user_id, property, description, created_time, updated_time) VALUES `;
   const specialtyList = [];
 
   try {
@@ -74,7 +76,7 @@ const makeSpecialtyInsertSQL = async (seq, userId) => {
 }
 
 const makeScheduleInsertSQL = async (userId, scheduleTimes) => {
-  let sql = `INSERT INTO directorsdb.schedule (user_id, start_time, status, created_time, updated_time) VALUES `;
+  let sql = `INSERT INTO mydb.schedule (user_id, start_time, status, created_time, updated_time) VALUES `;
 
   const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
   for (let i = 0; i < scheduleTimes.length; i++) {
@@ -119,14 +121,14 @@ const makeQuestionInsertSQL = async (userData, stLength) => {
   // user 0     1 - 33
   // user 1 ... 34 - 66
   // userNum * stL
-  let sql = `ALTER TABLE directorsdb.question AUTO_INCREMENT = 0; `;
-  const prefix = `INSERT INTO directorsdb.question (title, content, questioner_id, director_id, question_check, director_check, schedule_id, category, comment, status, created_time, updated_time) VALUES `;
+  let sql = `ALTER TABLE mydb.question AUTO_INCREMENT = 0; `;
+  const prefix = `INSERT INTO mydb.question (title, content, questioner_id, director_id, question_check, director_check, schedule_id, category, comment, status, created_time, updated_time) VALUES `;
 
   for(let questionerIndex = 0; questionerIndex < userData.length-5; questionerIndex++) {
     let f = 0;
     for (let dirIndex = questionerIndex + 1; dirIndex < questionerIndex + 6; dirIndex++) {
       const title= faker.lorem.paragraph(1);
-      const content = faker.lorem.paragraph({ min: 1, max: 3 });
+      const content = faker.lorem.paragraph({ min: 1, max: 2 });
 
       const schedule_id = (dirIndex) * stLength + (++f);
 
@@ -149,8 +151,8 @@ const makeSql = async () => {
   const userData = [];
 
   let userSql = "";
-  let specialtySql = "ALTER TABLE directorsdb.specialty AUTO_INCREMENT = 0; ";
-  let scheduleSql = "ALTER TABLE directorsdb.schedule AUTO_INCREMENT = 0; ";
+  let specialtySql = "ALTER TABLE mydb.specialty AUTO_INCREMENT = 0; ";
+  let scheduleSql = "ALTER TABLE mydb.schedule AUTO_INCREMENT = 0; ";
   let questionSql = "";
   
   for (let i = 0; i < userCount; i++) {
@@ -167,10 +169,10 @@ const makeSql = async () => {
 
   questionSql = await makeQuestionInsertSQL(userData, startTimes.length);
 
-  await writeFile('users_insert.sql', userSql);
-  await writeFile('specialty_insert.sql', specialtySql);
-  await writeFile('schedule_insert.sql', scheduleSql);
-  await writeFile('question_insert.sql', questionSql);
+  await writeFile('users_insert1.sql', userSql);
+  await writeFile('specialty_insert1.sql', specialtySql);
+  await writeFile('schedule_insert1.sql', scheduleSql);
+  await writeFile('question_insert1.sql', questionSql);
 }
 
 const writeFile = async (fileName, data) => {
