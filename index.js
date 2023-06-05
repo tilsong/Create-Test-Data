@@ -4,8 +4,6 @@ const randomUser = require('./user-random/generateRandomUserSql');
 
 const userCount = process.argv[2];
 const schema = process.argv[3];
-console.log("userCount", userCount);
-console.log("schema", schema);
 
 const twoSpecialty = Math.floor(userCount * 0.6);
 const threeSpecialty = Math.floor(userCount * 0.9);
@@ -158,7 +156,7 @@ const makeSql = async () => {
   let questionSql = "";
   
   for (let i = 0; i < userCount; i++) {
-    const user = await randomUser.makeUserInsertSQL(i);
+    const user = await randomUser.makeUserInsertSQL(i, schema);
     userSql += user[1];
     
     const specialty = await makeSpecialtyInsertSQL(i, user[0]);

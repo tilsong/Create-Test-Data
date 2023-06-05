@@ -1,12 +1,14 @@
 const fs = require('fs');
 
+const schema = process.argv[2];
+
 const outputFileName = './region_insert.sql';
 const regionNames = ["강원", "경기", "경남", "경북", "광주", "대구", "대전", "부산", "서울", "세종", "울산", "인천", "전남", "전북", "제주", "충남", "충북"];
 
 const generateRegionSQL = () => {
     const writeStream = fs.createWriteStream(outputFileName, { flags: 'a' });
 
-    const prefix = `INSERT INTO mydb.region (full_address, unit_address, point, created_time, updated_time) `;
+    const prefix = `INSERT INTO ${schema}.region (full_address, unit_address, point, created_time, updated_time) `;
 
     for(const regionName of regionNames) {
         const filePath = `./regionCSV/${regionName}_좌표.csv`
